@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ui.draAble</title>
+</head>
+<body>
+<style>
+	#box {
+		height: 100px;
+		width: 100px;
+		border: 1px solid red;
+		background : blue;
+	}
+</style>
+    <div id="box"> </div>
+    <script src="../dist/libs/Air.0.1.0.js"></script>
+    <script type="text/javascript">
+        Air.moduleURL("../dist/module/");
+        Air.run(function(require){
+            var dragAble = require("ui.dragAble");
+
+            var dom = {
+            	box : document.querySelector("#box")
+            };
+
+            dragAble(dom.box).startDrag({position:'absolute'});
+
+        })
+    </script>
+</body>
+</html>
