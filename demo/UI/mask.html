@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+	<title>mask</title>
+</head>
+<body>
+<h1>UI.mask</h1>
+<fieldset>
+	<legend>控制面板</legend>
+	<label>颜色:<input></label>
+	<label>透明度:<input></label>
+	<button>Run!</button>
+</fieldset>
+
+<fieldset>
+	<legend>Code</legend>
+	<textarea></textarea>
+</fieldset>
+
+
+    <script src="../../dist/libs/Air.0.1.0.js"></script>
+    <script type="text/javascript">
+        Air.moduleURL("../../dist/module/");
+        Air.run(function(require){
+            var mask = require("ui.mask");
+
+            var demoConfig = {
+            	style : {
+            		color : '#000',
+            		alpha : 0.5
+            	}
+            }
+            var demoMask = mask();
+            demoMask.show();
+	
+        })
+    </script>
+
+</body>

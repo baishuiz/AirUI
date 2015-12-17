@@ -1,4 +1,16 @@
-var gulp = require('gulp');
+// var gulp = require('gulp');
+
+var handleError = function (err) {
+    var colors = gutil.colors;
+    console.log('\n')
+    gutil.log(colors.red('Error!'))
+    gutil.log('fileName: ' + colors.red(err.fileName))
+    gutil.log('lineNumber: ' + colors.red(err.lineNumber))
+    gutil.log('message: ' + err.message)
+    gutil.log('plugin: ' + colors.yellow(err.plugin))
+}
+var combiner = require('stream-combiner2')
+var gutil = require('gulp-util')
 
 var gulp = require('gulp'),  
     sass = require('gulp-ruby-sass'),
@@ -15,12 +27,26 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload');
 
 gulp.task('default', function() {  
-  return gulp.src('src/module/**/*.js')
-    // .pipe(jshint('.jshintrc'))
-    // .pipe(jshint.reporter('default'))
-    .pipe(gulp.dest('dist/module/'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/module/'))
-    .pipe(notify({ message: 'Scripts task complete' }));
+   // gulp.src('src/module/**/*.js')
+   //  // .pipe(jshint('.jshintrc'))
+   //  // .pipe(jshint.reporter('default'))
+   //  .pipe(gulp.dest('dist/module/'))
+   //  .pipe(rename({suffix: '.min'}))
+   //  .pipe(uglify())
+   //  .pipe(gulp.dest('dist/module/'))
+   //  .pipe(notify({ message: 'Scripts task complete' }));
+
+
+
+    var combined = combiner.obj([
+         gulp.src('src/module/**/*.js'),
+         gulp.dest('dist/module/'),
+         rename({suffix: '.min'}),
+         uglify(),
+         gulp.dest('dist/module/')
+         
+        ])
+    notify({ message: 'Scripts task complete' })
+
+        combined.on('error', handleError)
 });
