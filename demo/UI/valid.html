@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">	
+	<title>valid</title>
+</head>
+<body>
+
+<form name="testForm" id="testForm">
+     <input name="age" id='age' />
+     <button type="submit">submit</button>
+	
+</form>
+    <script src="../../dist/libs/Air.0.1.0.js"></script>
+    <script type="text/javascript">
+        Air.moduleURL("../../dist/module/");
+        Air.run(function(require){
+            var valid = require("ui.valid");
+            var formConfig = [{
+            	target  : '#testForm', // 选择器或 DOM 元素引用
+            	onevent : 'submit',
+            	rule    : [
+            		{
+            			target : '#age',
+            			rule   : /\S+/,
+            			errMsg : '请填写年龄' 
+            		},
+
+            		{
+            			target  : '#age',
+            			rule    : /\d{2,3}/,
+            			errMsg  : '年龄须为2或3位数字'
+
+            		},
+
+            		{
+            			target : '#age',
+            			rule   : function(value){
+            				value *= 1; 
+            				return value>=18 
+            			},
+            			errMsg : '年龄必须大于等于18岁'
+            		}
+            	],
+            	errMsg  : null
+
+            }];
+
+
+            var formValid = valid(formConfig);
+            beacon(formValid).on(formValid.EVENT.ERROR, function(e, result){
+            	for (var i = result.length - 1; i >= 0; i--) {
+            		console.log(result[i].errMsg);	
+            	};
+            });
+
+        });
+    </script>
+
+</body>
+</html>
