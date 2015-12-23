@@ -1,4 +1,4 @@
-Air.Module('AirUI.AirUI.UI.popWindow', function(require){
+Air.Module('AirUI.UI.popWindow', function(require){
     var mask = require('AirUI.UI.mask');
     var maskLayer = mask();
 
@@ -37,13 +37,13 @@ Air.Module('AirUI.AirUI.UI.popWindow', function(require){
         var defaultConfig = {};
 
         this.show = function(content){
-        	
+
         	dom.popWindow.innerHTML = content || '';
 
             dom.container.style.display = 'block';
 
         	dom.popWindow.style.position = 'absolute';
-                    	
+
             dom.popWindow.style.left = document.body.offsetWidth/2-dom.popWindow.offsetWidth/2 + 'px'
         	dom.popWindow.style.top = window.innerHeight/2-dom.popWindow.offsetHeight/2 + 'px'
 
@@ -60,6 +60,6 @@ Air.Module('AirUI.AirUI.UI.popWindow', function(require){
         init();
     }
 
-    
+
     return PopWindow;
 })

@@ -1,4 +1,4 @@
-Air.Module('event.eventObject', function(require){
+Air.Module('AirUI.event.eventObject', function(require){
 	/**
 	 * @means   增强事件对象
 	 * @author  张有泉 baishuiz@gmail.com

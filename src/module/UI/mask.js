@@ -1,6 +1,6 @@
-Air.Module('ui.mask', function(require){
-    
-    
+Air.Module('AirUI.ui.mask', function(require){
+
+
     function Mask(config){
 
         if( !(this instanceof Mask) ){
@@ -48,7 +48,7 @@ Air.Module('ui.mask', function(require){
             dom.maskLayer.style.cssText = cssText;
         }
 
-        
+
 
         function disableScroll(){
             beacon(dom.maskLayer).on('mousewheel', function(e){

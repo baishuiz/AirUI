@@ -6,7 +6,7 @@
  * @extend http://msdn.microsoft.com/en-us/library/ms536689.aspx
  * @extend https://developer.mozilla.org/en/DOM/window.releaseEvents
  */		
- Air.Module('event.releaseCapture', function(require){
+ Air.Module('AirUI.event.releaseCapture', function(require){
 	 function releaseCapture(dom,eventType){
 
 		if(dom.releaseCapture){

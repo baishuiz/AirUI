@@ -1,4 +1,4 @@
-Air.Module('UI.mousePosition', function(){
+Air.Module('AirUI.UI.mousePosition', function(){
 
 	/*
 	 * 获取鼠标坐标

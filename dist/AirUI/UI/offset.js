@@ -1,4 +1,4 @@
-Air.Module("AirUI.UI.offset", function(require){
+Air.Module("UI.offset", function(require){
 	/**
 	 * @module  获取对象相对于body的位置信息
 	 * @author  张有泉 baishuiz@gmail.com

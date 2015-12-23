@@ -7,7 +7,7 @@
  * @extend https://developer.mozilla.org/en/window.captureEvents
  */		
  
- Air.Module('event.setCapture', function(require){
+ Air.Module('AirUI.event.setCapture', function(require){
 	 function setCapture(dom,eventType){
 
 		if(dom.setCapture){ 

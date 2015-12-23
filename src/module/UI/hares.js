@@ -1,7 +1,7 @@
-Air.Module('ui.hares', function(){
+Air.Module('AirUI.ui.hares', function(){
 	var _frame = 25; //默认帧频
 	var _frameFnList = [];
-	
+
     //属性别名
     var _alias = {
     	x:'left',
@@ -18,24 +18,24 @@ Air.Module('ui.hares', function(){
 	var hare = function(sprite,option){
 		_sprite = sprite;
 		option = option ||{};
-       
-		
-		
-		/*		
+
+
+
+		/*
 		this.moveTo = _moveTo;
 		this.moveBy =  _moveBy;
 		this.moveFrom = function(){};
 		this.frame = _frameFn;
 		*/
-		
+
 
 	};
-	
-	
+
+
 	var _frameBind = function(fn){
 		fn&&_frameFnList.push(fn);
 	};
-	
+
 	//帧计时器执行
 	var _onFrame = function(){
 		window.clearInterval(_onFrameHandle);
@@ -46,10 +46,10 @@ Air.Module('ui.hares', function(){
 		    	_frameFnList[currentFn]();
 		}
 		_onFrameHandle = window.setInterval(_onFrame,1000/_frame);
-	}; 
-	
+	};
+
 	var _onFrameHandle =  _frameFn(_frame);
-	
+
 
 	var animationFn = function(){};
     animationFn.dom = [];
@@ -62,10 +62,10 @@ Air.Module('ui.hares', function(){
     	}
     	return attrName;
     };
-    
+
     //获取动画属性步长
     animationFn.getStep = function(dom,attr,fn){
-    	
+
     };
 
     //更改指定属性(有计量单位的)
@@ -85,11 +85,11 @@ Air.Module('ui.hares', function(){
 				}
 			}
 		};
-		_frameBind(_changeAttrValue(dom,step));    	
+		_frameBind(_changeAttrValue(dom,step));
     };
 
-	
-	
+
+
 	//更改透明度
     animationFn.alpha = animationFn.opacity = function(dom,time,value){
 		var opacity = typeof dom.style.opacity=='undefined'?animationFn.alpha.forIE:animationFn.alpha.forW3c;
@@ -108,25 +108,25 @@ Air.Module('ui.hares', function(){
 			}
 		};
 		_frameBind(_changeOpacity(dom,step));
-		
+
 	};//更改透明度
-	
+
 	animationFn.alpha.forIE = function(dom,value){
 		    //value && (value = dom.filters.alpha.opacity = value*100);
 			if(value){
 				dom.style.filter="alpha(opacity="+value*100+")";
 				//value
 			}
-			//value && 
+			//value &&
 			value =_css(dom,'opacity',value);
 			return parseInt(value)
 	}
-		
+
 	animationFn.alpha.forW3c = function(dom,value){
-			value =_css(dom,'opacity',value);	
+			value =_css(dom,'opacity',value);
 			return parseInt(value)
 	}
-		
+
 	//合并元素属性设置
 	var _merge = function(originalObj,newObj){
 		for(var newAttr in newObj){
@@ -135,8 +135,8 @@ Air.Module('ui.hares', function(){
 	}//over
 
 
-	
-	
+
+
     //Css样式
 	//首先将css名称 统一为 驼峰式；
     var _css = function(dom,styleTitle,styleValue){
@@ -146,8 +146,8 @@ Air.Module('ui.hares', function(){
         var style = window.getComputedStyle?window.getComputedStyle(dom,null)[styleTitle]:dom.currentStyle[styleTitle];
         return style;
     };
-		
-	
+
+
 	//设置帧频
 	function _frameFn(frame){
 	    frame&&(_frame=frame);
@@ -161,7 +161,7 @@ Air.Module('ui.hares', function(){
 		_onFrameHandle = window.setInterval(_onFrame,1000/_frame);
 		//_onFrameHandle = window.setInterval(function(){},1000/_frame);
 	};
-	
+
 	//动画方法
 	var _moveTo = function(sprite,time,attributes,option){
 		if(!attributes||!sprite) return ;
@@ -187,7 +187,7 @@ Air.Module('ui.hares', function(){
 
 		//循环设置 option中涉及到的属性
 		for (attr in attributes){
-			
+
 			var attrFix = _getAttributeName(attr);
 			if(_specialAttribute[attrFix]){
 				animationFn[attrFix](sprite,time,attributes[attr]);
@@ -195,7 +195,7 @@ Air.Module('ui.hares', function(){
 				animationFn.layout(attrFix,sprite,time,attributes[attr]);
 			}
 		}
-        return this; 
+        return this;
 		//return new hare(sprite,{waitQuery:true});
 	};
 
@@ -214,14 +214,14 @@ Air.Module('ui.hares', function(){
 				animationFn.layout(attrFix,sprite,time,currentAttrValue+option[attr]);
 			}
 		}
-	};//over		
-	 
+	};//over
+
 	hare.prototype = {
 		moveTo: _moveTo,
 		moveBy: _moveBy,
 		moveFrom:function(){},
 		frame:_frameFn
-	};		
-	
+	};
+
 	return new hare;
 })

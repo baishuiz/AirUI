@@ -1,6 +1,6 @@
-Air.Module('AirUI.AirUI.UI.valid', function(require){
+Air.Module('AirUI.UI.valid', function(require){
     function Valid(config) {
-        
+
         if(!(this instanceof Valid)){
             return new Valid(config);
         }
@@ -23,7 +23,7 @@ Air.Module('AirUI.AirUI.UI.valid', function(require){
                         e.preventDefault();
                     }
                 });
-            }           
+            }
         }
 
         function validRule(rules){
@@ -31,12 +31,12 @@ Air.Module('AirUI.AirUI.UI.valid', function(require){
             for(var index = 0; index < rules.length; index++) {
                 var activeRule = rules[index];
                 var activeElement = document.querySelector(activeRule.target);
-                
+
 
                 if(beacon.utility.isType(activeRule.rule, 'Function')) {
                     var isInvalid = !activeRule.rule(activeElement.value);
                 } else {
-                    var isInvalid = !activeElement.value.match(activeRule.rule);    
+                    var isInvalid = !activeElement.value.match(activeRule.rule);
                 }
 
 
