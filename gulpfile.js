@@ -46,7 +46,7 @@ gulp.task('default', function() {
     var combined = combiner.obj([
          gulp.src(SRC),
          changed(DEST),
-         gulp.dest('y'),
+         gulp.dest(DEST),
          rename({suffix: '.min'}),
          uglify(),
          gulp.dest(DEST)
