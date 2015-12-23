@@ -12,7 +12,7 @@ var handleError = function (err) {
 var combiner = require('stream-combiner2')
 var gutil = require('gulp-util')
 
-var gulp = require('gulp'),  
+var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
@@ -26,7 +26,7 @@ var gulp = require('gulp'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload');
 
-gulp.task('default', function() {  
+gulp.task('default', function() {
    // gulp.src('src/module/**/*.js')
    //  // .pipe(jshint('.jshintrc'))
    //  // .pipe(jshint.reporter('default'))
@@ -40,11 +40,11 @@ gulp.task('default', function() {
 
     var combined = combiner.obj([
          gulp.src('src/module/**/*.js'),
-         gulp.dest('dist/module/'),
+         gulp.dest('dist/AirUI/'),
          rename({suffix: '.min'}),
          uglify(),
-         gulp.dest('dist/module/')
-         
+         gulp.dest('dist/AirUI')
+
         ])
     notify({ message: 'Scripts task complete' })
 

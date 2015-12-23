@@ -19,11 +19,11 @@
 </fieldset>
 
 
-    <script src="../../dist/libs/Air.0.1.0.js"></script>
+    <script src="../libs/Air.0.1.0.js"></script>
     <script type="text/javascript">
-        Air.moduleURL("../../dist/module/");
+        Air.moduleURL("../../dist/");
         Air.run(function(require){
-            var mask = require("ui.mask");
+            var mask = require("AirUI.ui.mask");
 
             var demoConfig = {
             	style : {
@@ -33,7 +33,7 @@
             }
             var demoMask = mask();
             demoMask.show();
-	
+
         })
     </script>
 
