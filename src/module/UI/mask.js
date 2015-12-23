@@ -1,4 +1,4 @@
-Air.Module('AirUI.ui.mask', function(require){
+Air.Module('AirUI.UI.mask', function(require){
 
 
     function Mask(config){

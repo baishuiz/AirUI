@@ -1,4 +1,4 @@
-Air.Module('AirUI.ui.hares', function(){
+Air.Module('AirUI.UI.hares', function(){
 	var _frame = 25; //默认帧频
 	var _frameFnList = [];
 
