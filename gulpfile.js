@@ -38,7 +38,7 @@ gulp.task('default', function() {
     .pipe(changed(DEST, {hasChanged: changed.compareSha1Digest}))
     .pipe(gulp.dest(DEST))
     .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
+    .pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest(DEST))
     .pipe(notify({ message: 'Scripts task complete' }));
 
