@@ -11,22 +11,26 @@ Air.Module('AirUI.UI.valid', function(require){
 
 
         var self = this;
+        function bindEvent(target, activeConfig) {
+            beacon(target).on(activeConfig.onevent, function(e){
+                var result = validRule(activeConfig.rule);
+                if(result.length > 0) {
+                    e.preventDefault();
+                }
+            });
+        }
 
         function eachConfig(){
             for(var index = 0; index < config.length; index++) {
                 var activeConfig = config[index];
                 var target = document.querySelector(activeConfig.target);
-                beacon(target).on(activeConfig.onevent, function(e){
-                    var result = validRule(activeConfig.rule);
-                    if(result.length > 0) {
-                        e.preventDefault();
-                    }
-                });
+                bindEvent(target, activeConfig);
             }
         }
 
         function validRule(rules){
-            var result = [];
+            var error = [];
+            var success = [];
             for(var index = 0; index < rules.length; index++) {
                 var activeRule = rules[index];
                 var activeElement = document.querySelector(activeRule.target);
@@ -40,17 +44,19 @@ Air.Module('AirUI.UI.valid', function(require){
 
 
                 if(isInvalid){
-                    result.push(activeRule);
+                    error.push(activeRule);
+                } else {
+                    success.push(activeRule);
                 }
             }
 
-            if(result.length > 0){
-                beacon(self).on(self.EVENT.ERROR, result);
+            if(error.length > 0){
+                beacon(self).on(self.EVENT.ERROR, error);
             } else {
-                beacon(self).on(self.EVENT.SUCCESS);
+                beacon(self).on(self.EVENT.SUCCESS, success);
             }
 
-            return result;
+            return error;
         }
 
         eachConfig();
