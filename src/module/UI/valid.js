@@ -12,17 +12,20 @@ Air.Module('AirUI.UI.valid', function(require){
 
 
         var self = this;
+        function bindEvent(target, activeConfig) {
+            beacon(target).on(activeConfig.onevent, function(e){
+                var result = validRule(activeConfig.rule);
+                if(result.length > 0) {
+                    e.preventDefault();
+                }
+            });
+        }
 
         function eachConfig(){
             for(var index = 0; index < config.length; index++) {
                 var activeConfig = config[index];
                 var target = document.querySelector(activeConfig.target);
-                beacon(target).on(activeConfig.onevent, function(e){
-                    var result = validRule(activeConfig.rule);
-                    if(result.length > 0) {
-                        e.preventDefault();
-                    }
-                });
+                bindEvent(target, activeConfig);
             }
         }
 
