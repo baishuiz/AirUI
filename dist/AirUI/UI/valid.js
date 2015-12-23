@@ -1,6 +1,5 @@
 Air.Module('AirUI.UI.valid', function(require){
     function Valid(config) {
-
         if(!(this instanceof Valid)){
             return new Valid(config);
         }

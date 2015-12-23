@@ -32,27 +32,28 @@ var gulp = require('gulp'),
     var SRC  = 'src/module/**/*.js'
 
 gulp.task('default', function() {
-   // gulp.src('src/module/**/*.js')
-   //  // .pipe(jshint('.jshintrc'))
-   //  // .pipe(jshint.reporter('default'))
-   //  .pipe(gulp.dest('dist/module/'))
-   //  .pipe(rename({suffix: '.min'}))
-   //  .pipe(uglify())
-   //  .pipe(gulp.dest('dist/module/'))
-   //  .pipe(notify({ message: 'Scripts task complete' }));
+    gulp.src(SRC)
+    // .pipe(jshint('.jshintrc'))
+    // .pipe(jshint.reporter('default'))
+    .pipe(changed(DEST, {hasChanged: changed.compareSha1Digest}))
+    .pipe(gulp.dest(DEST))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest(DEST))
+    .pipe(notify({ message: 'Scripts task complete' }));
 
 
 
-    var combined = combiner.obj([
-         gulp.src(SRC),
-         changed(DEST),
-         gulp.dest(DEST),
-         rename({suffix: '.min'}),
-         uglify(),
-         gulp.dest(DEST)
-
-        ])
-    notify({ message: 'Scripts task complete' })
-
-        combined.on('error', handleError)
+    // var combined = combiner.obj([
+    //      gulp.src(SRC),
+    //      changed(DEST),
+    //      gulp.dest(DEST),
+    //      rename({suffix: '.min'}),
+    //      uglify(),
+    //      gulp.dest(DEST),
+    //     notify({ message: 'Scripts task complete' })
+    //    ]);
+    //
+    //
+    //     combined.on('error', handleError)
 });
