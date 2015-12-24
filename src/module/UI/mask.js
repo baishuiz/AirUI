@@ -10,7 +10,7 @@ Air.Module('AirUI.UI.mask', function(require){
         var self = this;
 
         var defaultStyle = {
-            position      : 'absolute',
+            position      : 'fixed',
             width         : '100%',
             height        : '100%',
             background    : '#000',
@@ -70,6 +70,8 @@ Air.Module('AirUI.UI.mask', function(require){
             setStyle({display:'none'});
             enableScroll();
         }
+
+        this.root = dom.maskLayer;
 
 
     }
