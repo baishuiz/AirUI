@@ -19,11 +19,12 @@ Air.Module('AirUI.UI.dialog', function(require){
         var defaultConfig = {};
 
         this.show = function(title, content){
+          title = typeof title === 'string' ? title : '消息提示';
           var html = '<div class="pdb-bgm"></div><div class="pdb-main">'
-                       + '<div class="pdb-title ' + (title ? '' : 'hidden') + '"><h4>'
+                       + '<div class="pdb-title "><h4>'
                        + title
                        + '</h4><div class="border-out"><p class="border-in"><span class="close icon icon-close"  title="关闭浮层">关闭</span></p></div></div><div class="pdb-content"><div class="pdb-contentframe">'
-                       + (content || title);
+                       + (content || '');
                        + '</div></div><div class="pdb-bottom hidden"></div></div>';
           popWindow.show(html);
           var dialog = dom.dialog;
