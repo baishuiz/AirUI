@@ -28,6 +28,7 @@ Air.Module('AirUI.UI.mask', function(require){
             maskLayer : generateElement()
         }
 
+        dom.maskLayer.id = 'c-mask';
         beacon(dom.maskLayer).on('click', function(){
             self.hidden();
         })
