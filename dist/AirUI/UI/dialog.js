@@ -39,8 +39,9 @@ Air.Module('AirUI.UI.dialog', function(require){
                            + '<div class="pdb-title "><h4>'
                            + title
                            + '</h4><div class="border-out"><p class="border-in"><span class="js-close close icon icon-close"  title="关闭浮层">关闭</span></p></div></div><div class="pdb-content"><div class="pdb-contentframe">'
-                           + (content || '');
+                           + (typeof content === 'string' ? content : '');
                            + '</div></div><div class="pdb-bottom hidden"></div></div>';
+
             popWindow.show(html);
             var dialog = dom.dialog;
 
@@ -48,7 +49,11 @@ Air.Module('AirUI.UI.dialog', function(require){
             dom.bgm = dialog.querySelector('.pdb-bgm');
             dom.bodyWrap = dialog.querySelector('.pdb-content');
             dom.body = dom.bodyWrap.querySelector('.pdb-contentframe');
-            dom.body.innerHTML = content;
+
+            if (content && content.nodeType === 1) {
+                dom.body.appendChild(content);
+                content.style.display = 'block';
+            }
             dom.titleWrap = dialog.querySelector('.pdb-title');
             dom.close = dialog.querySelector('.close');
             // dom.bottom = dialog.querySelector('.pdb-bottom');
