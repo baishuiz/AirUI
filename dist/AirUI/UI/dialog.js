@@ -33,14 +33,19 @@ Air.Module('AirUI.UI.dialog', function(require){
 
         var defaultConfig = {};
 
-        this.show = function(content, title){
-            title = typeof title === 'string' ? title : '消息提示';
+        this.show = function(options){
+            options = options || {};
+            var title = typeof options.title === 'string' ? options.title : '消息提示';
+            var content = options.content;
+            var bottomBtns = typeof options.bottomBtns === 'boolean' ? options.bottomBtns : false;
             var html = '<div class="pdb-bgm"></div><div class="pdb-main">'
                            + '<div class="pdb-title "><h4>'
                            + title
                            + '</h4><div class="border-out"><p class="border-in"><span class="js-close close icon icon-close"  title="关闭浮层">关闭</span></p></div></div><div class="pdb-content"><div class="pdb-contentframe">'
-                           + (typeof content === 'string' ? content : '');
-                           + '</div></div><div class="pdb-bottom hidden"></div></div>';
+                           + (typeof content === 'string' ? content : '')
+                           + '</div></div><div class="pdb-bottom ' + (bottomBtns ? '' : 'hidden') + ' textcenter">'
+                           + (bottomBtns ? '<a class="dialog-btn btn-action js-ok"><em>确定</em></a><a class="dialog-btn btn-cancel js-cancel"><em>取消</em></a>' : '')
+                           + '</div></div>';
 
             popWindow.show(html);
             var dialog = dom.dialog;
@@ -56,10 +61,22 @@ Air.Module('AirUI.UI.dialog', function(require){
             }
             dom.titleWrap = dialog.querySelector('.pdb-title');
             dom.close = dialog.querySelector('.close');
-            // dom.bottom = dialog.querySelector('.pdb-bottom');
+            dom.bottom = dialog.querySelector('.pdb-bottom');
+
+            beacon(dom.bottom).once('click', function(e){
+                var target = e.target || e.srcElement;
+                delegate(target, 'js-ok', dom.dialog, function (elm) {
+                    options.okAction && options.okAction(elm);
+                    self.close();
+                });
+                delegate(target, 'js-cancel', dom.dialog, function (elm) {
+                    options.cancelAction && options.cancelAction(elm);
+                    self.close();
+                });
+            });
 
             dom.bodyWrap.style.height = dom.body.offsetHeight + 'px';
-            var mainHeight = dom.titleWrap.offsetHeight + dom.bodyWrap.offsetHeight;
+            var mainHeight = dom.titleWrap.offsetHeight + dom.bodyWrap.offsetHeight + dom.bottom.offsetHeight;
             dom.main.style.height = mainHeight + 'px';
             dom.bgm.style.height = mainHeight + 'px';
             var mainWidth = dom.main.offsetWidth;
