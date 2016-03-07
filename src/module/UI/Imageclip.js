@@ -18,6 +18,8 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     car.style.position = 'static';
     car.style.width = width + 'px';
     car.style.height = height + 'px';
+    car.style.top = 0;
+    car.style.left = 0;
     return car;
   }
 

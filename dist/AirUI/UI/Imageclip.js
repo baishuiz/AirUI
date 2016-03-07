@@ -18,6 +18,8 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     car.style.position = 'static';
     car.style.width = width + 'px';
     car.style.height = height + 'px';
+    car.style.top = 0;
+    car.style.left = 0;
     return car;
   }
 
@@ -41,6 +43,11 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     imgContainer.appendChild(cameraCar);
     function cameraMovingCallbac(e){
         camera.translateTo({x:cameraCar.offsetLeft,y:cameraCar.offsetTop,width:cameraWidth,height:cameraHeight});
+    }
+
+    this.getOffset = function(){
+      var result = {}
+      return result;
     }
   }
 
