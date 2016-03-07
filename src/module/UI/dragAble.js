@@ -1,9 +1,9 @@
 Air.Module('AirUI.UI.dragAble', function(require){
-	var mousePosition = require("UI.mousePosition");
-	var offset        = require("UI.offset");
-	var eventObject   = require("event.eventObject");
-	var setCapture    = require("event.setCapture");
-	var releaseCapture= require("event.releaseCapture");
+	var mousePosition = require("AirUI.UI.mousePosition");
+	var offset        = require("AirUI.UI.offset");
+	var eventObject   = require("AirUI.event.eventObject");
+	var setCapture    = require("AirUI.event.setCapture");
+	var releaseCapture= require("AirUI.event.releaseCapture");
 
 	/**
 	 * @module  赋予对象拖动的能力

@@ -1,10 +1,10 @@
-Air.Module("UI.offset", function(require){
+Air.Module("AirUI.ui.offset", function(require){
 	/**
 	 * @module  获取对象相对于body的位置信息
 	 * @author  张有泉 baishuiz@gmail.com
 	 * @param   dom {HTML element} 待检测的精灵
 	 * @return  json object   返回相对于body的全局偏移量{top,right,bottom,left}
-	 */		
+	 */
 	 function offset(dom) {
 		var globalPosition = {
 		    top:dom.offsetTop,
@@ -12,9 +12,9 @@ Air.Module("UI.offset", function(require){
 			bottom:dom.offsetParent.clientHeight - dom.offsetTop - dom.offsetHeight ,
 			left:dom.offsetLeft
 		};
-		
+
 		while (dom = dom.offsetParent){
-			
+
 			var domBorder = {
 			    top:dom.clientTop,
 				right:dom.offsetWidth - dom.clientLeft - dom.clientWidth,
@@ -34,4 +34,3 @@ Air.Module("UI.offset", function(require){
 
 	 return offset;
 });
- 
