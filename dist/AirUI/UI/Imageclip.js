@@ -20,7 +20,20 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     car.style.height = height + 'px';
     car.style.top = 0;
     car.style.left = 0;
+    car.style.border = "1px dashed #fff";
     return car;
+  }
+
+  function createMask(){
+     var mask = document.createElement('div');
+     mask.style.opacity = 0.8;
+     mask.style.background = 'black';
+     mask.style.width = '100%';
+     mask.style.height = '100%';
+     mask.style.position = 'absolute';
+     mask.style.left = 0;
+     mask.style.top = 0;
+     return mask;
   }
 
   function ImageClip(imgURL, options){
@@ -40,9 +53,10 @@ Air.Module("AirUI.ui.Imageclip", function(require){
       moving : cameraMovingCallbac
     }})
 
+    imgContainer.appendChild(createMask());
     imgContainer.appendChild(cameraCar);
     function cameraMovingCallbac(e){
-        camera.translateTo({x:cameraCar.offsetLeft,y:cameraCar.offsetTop,width:cameraWidth,height:cameraHeight});
+      camera.translateTo({x:cameraCar.offsetLeft,y:cameraCar.offsetTop,width:cameraWidth,height:cameraHeight});
     }
 
     this.getOffset = function(){
