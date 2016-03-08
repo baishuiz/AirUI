@@ -21,6 +21,7 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     car.style.top = 0;
     car.style.left = 0;
     car.style.border = "1px dashed #fff";
+    car.style.cursor = 'move'
     return car;
   }
 
