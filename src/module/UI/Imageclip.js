@@ -23,6 +23,10 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     car.style.left = x + 'px';
     car.style.border = "1px dashed #fff";
     car.style.cursor = 'move'
+    car.style.boxSizing = 'border-box';
+    car.style.webkitBoxSizing = 'border-box';
+    car.style.mozBoxSizing = 'border-box';
+    car.style.boxSizing = 'border-box';
     return car;
   }
 
@@ -44,15 +48,18 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     var imgElement   = createImageElement(imgURL, imgContainer.offsetWidth);
     var cameraWidth = options.width * scale;
     var cameraHeight = options.height * scale;
+    var cameraWidthWithoutBorder = cameraWidth - 2;
+    var cameraHeightWithoutBorder = cameraHeight - 2;
     var cameraCarX = options.x || 0;
     var cameraCarY = options.y || 0;
     var cameraCar = createCameraCar(cameraWidth, cameraHeight, cameraCarX, cameraCarY);
 
 
     cameraCar.appendChild(imgElement);
-    var camera = imgCamera(imgElement,cameraWidth, cameraHeight );
+    // clip有1px边框，所以camera需要使用减去2后的值
+    var camera = imgCamera(imgElement,cameraWidthWithoutBorder, cameraHeightWithoutBorder );
 
-    camera.translateTo({x:cameraCarX,y:cameraCarY,width:cameraWidth, height:cameraHeight});
+    camera.translateTo({x:cameraCarX,y:cameraCarY,width:cameraWidthWithoutBorder, height:cameraHeightWithoutBorder});
     dragAble(cameraCar).startDrag({position:'absolute',range:imgContainer , callBack:{
       moving : cameraMovingCallbac
     }})
@@ -60,7 +67,7 @@ Air.Module("AirUI.ui.Imageclip", function(require){
     imgContainer.appendChild(createMask());
     imgContainer.appendChild(cameraCar);
     function cameraMovingCallbac(e){
-      camera.translateTo({x:cameraCar.offsetLeft,y:cameraCar.offsetTop,width:cameraWidth,height:cameraHeight});
+      camera.translateTo({x:cameraCar.offsetLeft,y:cameraCar.offsetTop,width:cameraWidthWithoutBorder,height:cameraHeightWithoutBorder});
     }
 
     this.getOffset = function(){
