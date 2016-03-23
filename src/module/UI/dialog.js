@@ -48,41 +48,44 @@ Air.Module('AirUI.UI.dialog', function(require){
                            + '</div></div>';
 
             popWindow.show(html);
-            var dialog = dom.dialog;
 
-            dom.main = dialog.querySelector('.pdb-main');
-            dom.bgm = dialog.querySelector('.pdb-bgm');
-            dom.bodyWrap = dialog.querySelector('.pdb-content');
-            dom.body = dom.bodyWrap.querySelector('.pdb-contentframe');
+            setTimeout(function(){
+                var dialog = dom.dialog;
 
-            if (content && content.nodeType === 1) {
-                dom.body.appendChild(content);
-                content.style.display = 'block';
-            }
-            dom.titleWrap = dialog.querySelector('.pdb-title');
-            dom.close = dialog.querySelector('.close');
-            dom.bottom = dialog.querySelector('.pdb-bottom');
+                dom.main = dialog.querySelector('.pdb-main');
+                dom.bgm = dialog.querySelector('.pdb-bgm');
+                dom.bodyWrap = dialog.querySelector('.pdb-content');
+                dom.body = dom.bodyWrap.querySelector('.pdb-contentframe');
 
-            beacon(dom.bottom).once('click', function(e){
-                var target = e.target || e.srcElement;
-                delegate(target, 'js-ok', dom.dialog, function (elm) {
-                    options.okAction && options.okAction(elm);
-                    self.close();
+                if (content && content.nodeType === 1) {
+                    dom.body.appendChild(content);
+                    content.style.display = 'block';
+                }
+                dom.titleWrap = dialog.querySelector('.pdb-title');
+                dom.close = dialog.querySelector('.close');
+                dom.bottom = dialog.querySelector('.pdb-bottom');
+
+                beacon(dom.bottom).once('click', function(e){
+                    var target = e.target || e.srcElement;
+                    delegate(target, 'js-ok', dom.dialog, function (elm) {
+                        options.okAction && options.okAction(elm);
+                        self.close();
+                    });
+                    delegate(target, 'js-cancel', dom.dialog, function (elm) {
+                        options.cancelAction && options.cancelAction(elm);
+                        self.close();
+                    });
                 });
-                delegate(target, 'js-cancel', dom.dialog, function (elm) {
-                    options.cancelAction && options.cancelAction(elm);
-                    self.close();
-                });
-            });
 
-            dom.bodyWrap.style.height = dom.body.offsetHeight + 'px';
-            var mainHeight = dom.titleWrap.offsetHeight + dom.bodyWrap.offsetHeight + dom.bottom.offsetHeight;
-            dom.main.style.height = mainHeight + 'px';
-            dom.bgm.style.height = mainHeight + 'px';
-            var mainWidth = dom.main.offsetWidth;
+                dom.bodyWrap.style.height = dom.body.offsetHeight + 'px';
+                var mainHeight = dom.titleWrap.offsetHeight + dom.bodyWrap.offsetHeight + dom.bottom.offsetHeight;
+                dom.main.style.height = mainHeight + 'px';
+                dom.bgm.style.height = mainHeight + 'px';
+                var mainWidth = dom.main.offsetWidth;
 
-            dialog.style.left = document.body.offsetWidth/2 - mainWidth/2 + 'px';
-            dialog.style.top = window.innerHeight/2 - mainHeight/2 + 'px';
+                dialog.style.left = document.body.offsetWidth/2 - mainWidth/2 + 'px';
+                dialog.style.top = window.innerHeight/2 - mainHeight/2 + 'px';
+            }, 0);
         }
 
         this.close = function(){
