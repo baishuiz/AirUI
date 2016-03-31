@@ -16,9 +16,10 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
     var model = {};
 
     if (baseQueryString) {
+      baseQueryString = baseQueryString.replace(/^\?/, '');
        var collections = baseQueryString.split('&');
        if (collections) {
-           for (var i = collections.length - 1; i >= 0; i--) {
+           for (var i = 0, len = collections.length; i < len; i++) {
                var keyValue = collections[i];
                var keyValueArr = keyValue && keyValue.split('=');
                var key = keyValueArr && keyValueArr[0];
@@ -84,7 +85,8 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
                result.push(names[index] + t1 + values[index]);
            }
        }
-       return result.join(t2) || '';
+       var resultStr = result.join(t2);
+       return resultStr ? '?' + resultStr : '';
     }
   }
   return QueryStringBuilder;
