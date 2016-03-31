@@ -7,7 +7,7 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
 
     function getIndex(key) {
        key = key && key.toLowerCase();
-       return base.ArrayIndexOf(keyMap, key);
+       return beacon.utility.arrayIndexOf(keyMap, key);
     }
 
     var keyMap = [];
@@ -72,13 +72,6 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
        }
     }
 
-    var encodeURI = function (str) {
-       try {
-           str = str ? decodeURIComponent(str) : '';
-       } catch (e) { };
-
-       return encodeURIComponent(str).replace(/\*/g, "%2A").replace(/-/g, "%2D").replace(/_/g, "%5F").replace(/\./g, "%2E").replace(/!/g, '%21').replace(/~/g, '%7E').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29');
-    };
     this.set = set;
     this.get = get;
     this.remove = remove;
@@ -88,7 +81,7 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
        var result = [];
        for (var index = 0; index < names.length; index++) {
            if (values[index]) {
-               result.push(encodeURI(names[index]) + t1 + encodeURI(values[index]));
+               result.push(names[index] + t1 + values[index]);
            }
        }
        return result.join(t2) || '';
