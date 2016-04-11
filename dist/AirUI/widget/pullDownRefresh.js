@@ -66,7 +66,6 @@ Air.Module('AirUI.widget.pullDownRefresh', function(require) {
           return;
         }
         //标识操作进行中
-        isLock = true;
         isStart = true;
         //保存当前鼠标Y坐标
         start = hasTouch ? even.touches[0].pageY : even.pageY;
@@ -80,7 +79,7 @@ Air.Module('AirUI.widget.pullDownRefresh', function(require) {
 
     //滑动中
     function moveHandle(e) {
-      if (objparent.scrollTop <= 0 && isStart) {
+      if (objparent.scrollTop <= 0 && isStart && !isLock) {
         var even = typeof event == "undefined" ? e : event;
         if (!even.touches) {
           isLock = false;
@@ -108,7 +107,8 @@ Air.Module('AirUI.widget.pullDownRefresh', function(require) {
     }
     //滑动结束
     function endHandle(e) {
-      if (isPulling) {
+      if (isPulling && !isLock) {
+        isLock = true;
         //判断滑动距离是否大于等于指定值
         if (end - start >= offset + minDragHeight) {
           loadingElm.style.display = 'block';
