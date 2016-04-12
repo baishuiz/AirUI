@@ -127,6 +127,19 @@ Air.Module('AirUI.widget.pullDownRefresh', function(require) {
         }
       }
     }
+
+    function setDisable() {
+      isLock = true;
+    }
+
+    function setEnable() {
+      fn.back();
+    }
+
+    return {
+      setDisable: setDisable,
+      setEnable: setEnable
+    }
   }
   return api;
 });
