@@ -38,11 +38,11 @@ Air.Module('AirUI.UI.valid', function(require){
                 var activeRule = rules[index];
                 var activeElement = document.querySelector(activeRule.target);
 
-
+                var value = (activeElement.value || '').trim();
                 if(beacon.utility.isType(activeRule.rule, 'Function')) {
-                    var isInvalid = !activeRule.rule(activeElement.value);
+                    var isInvalid = !activeRule.rule(value);
                 } else {
-                    var isInvalid = !activeElement.value.match(activeRule.rule);
+                    var isInvalid = !value.match(activeRule.rule);
                 }
 
 
