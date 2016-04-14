@@ -60,12 +60,12 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
     function remove(key) {
        var _model = model;
        var index = getIndex(key);
-       if (key && index > 0) {
+       if (key && index >= 0) {
            delete model[key];
            names.splice(index, 1);
            values.splice(index, 1);
            keyMap.splice(index, 1);
-       } else {
+       } else if(!key) {
            model = {};
            names = [];
            values = [];
