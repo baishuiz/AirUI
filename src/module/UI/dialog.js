@@ -58,6 +58,7 @@ Air.Module('AirUI.UI.dialog', function(require){
                 dom.body = dom.bodyWrap.querySelector('.pdb-contentframe');
 
                 if (content && content.nodeType === 1) {
+                    content = content.cloneNode(true);
                     dom.body.appendChild(content);
                     content.style.display = 'block';
                 }
