@@ -34,7 +34,7 @@ Air.Module('AirUI.UI.QueryStringBuilder', function(require){
     }
 
     function set(key, value) {
-       if (key && value) {
+       if (key) {
            //keyMap.push(key.toLowerCase());
            var index = getIndex(key);
            if (index >= 0 && index < values.length) {
