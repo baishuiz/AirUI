@@ -1,7 +1,10 @@
 Air.Module('AirUI.UI.dialog', function(require){
-    var popWindow = require('AirUI.UI.popWindow')();
+    var PopWindow = require('AirUI.UI.popWindow');
     var delegate = function (target, className, root, callback) {
       if (target === root) {
+        return;
+      }
+      if (target === document.body) {
         return;
       }
       if (target.className.indexOf(className) !== -1) {
@@ -16,6 +19,14 @@ Air.Module('AirUI.UI.dialog', function(require){
             return new Dialog(config);
         }
         var self = this;
+        var popWindow = new PopWindow({
+            onClose: function() {
+                saveContent();
+            }
+        });
+        this.content = '';
+
+        var contentAry = [];
 
         var dom = {};
 
@@ -47,6 +58,8 @@ Air.Module('AirUI.UI.dialog', function(require){
                            + (bottomBtns ? '<a class="dialog-btn btn-action js-ok"><em>确定</em></a><a class="dialog-btn btn-cancel js-cancel"><em>取消</em></a>' : '')
                            + '</div></div>';
 
+            self.content = content;
+
             popWindow.show(html);
 
             setTimeout(function(){
@@ -58,7 +71,6 @@ Air.Module('AirUI.UI.dialog', function(require){
                 dom.body = dom.bodyWrap.querySelector('.pdb-contentframe');
 
                 if (content && content.nodeType === 1) {
-                    content = content.cloneNode(true);
                     dom.body.appendChild(content);
                     content.style.display = 'block';
                 }
@@ -91,9 +103,21 @@ Air.Module('AirUI.UI.dialog', function(require){
 
         this.close = function(){
             popWindow.close();
+            saveContent();
         }
 
         this.root = dom.dialog;
+
+        function saveContent() {
+            var content = self.content;
+            if (typeof content !== 'string') {
+                content.style.display = 'none';
+                document.body.appendChild(content);
+                if (contentAry.indexOf(content) === -1) {
+                    contentAry.push(content);
+                }
+            }
+        }
 
         init();
     };

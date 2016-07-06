@@ -1,12 +1,12 @@
 Air.Module('AirUI.UI.popWindow', function(require){
     var mask = require('AirUI.UI.mask');
-    var maskLayer = mask();
 
     function PopWindow(config){
         if( !(this instanceof PopWindow) ){
             return new PopWindow(config);
         }
         var self = this;
+        var maskLayer = mask();
 
         var dom = {
             popWindow : generateElement()
@@ -44,6 +44,7 @@ Air.Module('AirUI.UI.popWindow', function(require){
         this.close = function(){
             dom.popWindow.style.display = 'none';
             maskLayer.hidden();
+            config.onClose && config.onClose();
         }
 
         this.root = dom.popWindow;
