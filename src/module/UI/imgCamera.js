@@ -30,10 +30,9 @@ Air.Module("AirUI.ui.imgCamera", function(require){
       var scene = document.createElement('div');
       imgElement.parentNode.insertBefore(scene, imgElement);
       scene.appendChild(imgElement);
-      scene.style.position = 'relative';
       scene.style.width = imgModel.width + "px";
       scene.style.height = imgModel.height + "px";
-      scene.style.overflow = "hidden";
+      scene.className = 'cut-img-wrap';
       return scene;
     }
 
@@ -65,6 +64,7 @@ Air.Module("AirUI.ui.imgCamera", function(require){
 
     this.translateTo = function(cameraModel){
       var img = this.picture;
+      var wrap = this.scene;
       clipInfo.top = clipInfo.top + cameraModel.y * imgModel.scaleY
       clipInfo.right = clipInfo.right + cameraModel.x * imgModel.scaleX + cameraModel.width
       clipInfo.bottom = clipInfo.bottom +cameraModel.y * imgModel.scaleY + cameraModel.height
@@ -82,6 +82,8 @@ Air.Module("AirUI.ui.imgCamera", function(require){
       img.style.position = 'absolute';
       img.style.left = imgModel.left  - cameraModel.x * imgModel.scaleX +'px';
       img.style.top  = imgModel.top  - cameraModel.y * imgModel.scaleY + 'px';
+      wrap.style.width = cameraModel.width + 'px';
+      wrap.style.height = cameraModel.height + 'px';
     };
 
 
@@ -93,14 +95,3 @@ Air.Module("AirUI.ui.imgCamera", function(require){
   };
   return getCamera;
 });
-
-
-
-// var img = document.getElementById("img");
-// camera = imgCamera(img);
-// camera.setSize(2,2);
-//  camera.translateTo({x:455,y:252,width:100,height:100});
-// //camera.zoomTo(x,y,w,h);
-// //camera.zoomBy(x,y,w,h);
-// //camera.translateTo(x,y,w,h);
-// //camera.translateBy(x,y,w,h);

@@ -23,6 +23,7 @@ Air.Module('AirUI.UI.dragAble', function(require){
 			option.lock = option.lock || {};
 			option.captive = option.captive && [].concat(option.captive) || []; 	//同步移动的对象
 			option.ableDisable = option.ableDisable || false ;
+			option.allowMove = typeof option.allowMove === 'boolean' ? option.allowMove : true;
 			//option.range //范围对象
 
 
@@ -46,6 +47,9 @@ Air.Module('AirUI.UI.dragAble', function(require){
 
 
 			var moveHandle = function(lockInfo){
+			      	if (!option.allowMove) {
+			      		return function() {};
+			      	}
 				var result;
 				if(lockInfo.v&&lockInfo.h){
 					result = function(){};
