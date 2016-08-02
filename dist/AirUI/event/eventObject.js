@@ -12,7 +12,7 @@ Air.Module('AirUI.event.eventObject', function(require){
 		//修正事件对象
 		e = e || window.event;
 
-		var getMousePosition = require("AirUI.ui.mousePosition");
+		var getMousePosition = require("AirUI.UI.mousePosition");
 
 		//修正鼠标坐标
 		var mousePosition = getMousePosition(e);

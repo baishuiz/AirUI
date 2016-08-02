@@ -1,4 +1,4 @@
-Air.Module("AirUI.ui.Imageclip", function(require) {
+Air.Module("AirUI.UI.Imageclip", function(require) {
   var imgCamera = require('AirUI.UI.imgCamera');
   var offset = require('AirUI.UI.offset');
   var dragAble = require('AirUI.UI.dragAble');

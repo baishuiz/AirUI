@@ -1,4 +1,4 @@
-Air.Module("AirUI.ui.imgCamera", function(require){
+Air.Module("AirUI.UI.imgCamera", function(require){
   function ImagePlus(imgDom, cameraWidth, cameraHeight){
     if (!imgDom) {
         throw Error("nedd img Element");
