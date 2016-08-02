@@ -147,11 +147,11 @@ Air.Module("AirUI.UI.Imageclip", function(require) {
     calTop = calTop < 0 ? 0 : calTop;
     calLeft = calLeft < 0 ? 0 : calLeft;
 
-    if (calWidth >= options.maxWidth || calWidth <= options.minWidth) {
+    if (calWidth > options.maxWidth || calWidth < options.minWidth) {
       return;
     }
 
-    if (calHeight >= options.maxHeight || calHeight <= options.minHeight) {
+    if (calHeight > options.maxHeight || calHeight < options.minHeight) {
       return;
     }
 
@@ -227,7 +227,9 @@ Air.Module("AirUI.UI.Imageclip", function(require) {
     this.getOffset = function() {
       var result = {
         x: Math.floor(cameraCar.offsetLeft / scale),
-        y: Math.floor(cameraCar.offsetTop / scale)
+        y: Math.floor(cameraCar.offsetTop / scale),
+        width: Math.floor(cameraCar.clientWidth / scale),
+        height: Math.floor(cameraCar.clientHeight / scale)
       };
       return result;
     }
