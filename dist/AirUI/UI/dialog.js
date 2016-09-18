@@ -22,7 +22,8 @@ Air.Module('AirUI.UI.dialog', function(require){
         var popWindow = new PopWindow({
             onClose: function() {
                 saveContent();
-            }
+            },
+            needMask: config.needMask
         });
         this.content = '';
 

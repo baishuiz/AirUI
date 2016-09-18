@@ -6,7 +6,8 @@ Air.Module('AirUI.UI.popWindow', function(require){
             return new PopWindow(config);
         }
         var self = this;
-        var maskLayer = mask();
+        var needMask = typeof config.needMask === 'boolean' ? config.needMask : true;
+        var maskLayer = needMask ? mask() : null;
 
         var dom = {
             popWindow : generateElement()
@@ -19,7 +20,7 @@ Air.Module('AirUI.UI.popWindow', function(require){
 
         function init(){
             document.body.appendChild(dom.popWindow);
-            beacon(maskLayer.root).on('click', function(e) {
+            maskLayer && beacon(maskLayer.root).on('click', function(e) {
                 self.close();
             });
 
@@ -38,12 +39,12 @@ Air.Module('AirUI.UI.popWindow', function(require){
             dom.popWindow.style.left = document.body.offsetWidth/2-dom.popWindow.offsetWidth/2 + 'px'
             dom.popWindow.style.top = window.innerHeight/2-dom.popWindow.offsetHeight/2 + 'px'
 
-            maskLayer.show();
+            maskLayer && maskLayer.show();
         }
 
         this.close = function(){
             dom.popWindow.style.display = 'none';
-            maskLayer.hidden();
+            maskLayer && maskLayer.hidden();
             config.onClose && config.onClose();
         }
 
