@@ -15,6 +15,7 @@ Air.Module('AirUI.UI.dialog', function(require){
     };
 
     var Dialog = function(config){
+        config = config || {};
         if( !(this instanceof Dialog) ){
             return new Dialog(config);
         }

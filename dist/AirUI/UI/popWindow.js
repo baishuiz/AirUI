@@ -2,6 +2,7 @@ Air.Module('AirUI.UI.popWindow', function(require){
     var mask = require('AirUI.UI.mask');
 
     function PopWindow(config){
+        config = config || {};
         if( !(this instanceof PopWindow) ){
             return new PopWindow(config);
         }
