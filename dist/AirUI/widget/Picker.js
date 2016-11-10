@@ -325,12 +325,12 @@ Air.Module('AirUI.widget.Picker', function(require) {
             }, 100);
         }
 
-        function handleClick(e) {
-            if (!allowItemClick) return;
-            var target = e.target;
-            var index = +target.getAttribute('data-index');
-            col.setValue(index);
-        }
+        // function handleClick(e) {
+        //     if (!allowItemClick) return;
+        //     var target = e.target;
+        //     var index = +target.getAttribute('data-index');
+        //     col.setValue(index);
+        // }
 
 
         col.initEvents = function(detach) {
@@ -339,7 +339,9 @@ Air.Module('AirUI.widget.Picker', function(require) {
             col.container[eventName]('touchstart', handleTouchStart);
             col.container[eventName]('touchmove', handleTouchMove);
             col.container[eventName]('touchend', handleTouchEnd);
-            // col.items[method]('click', handleClick); TODO
+            // for (var i = 0; i < col.items.length; i++) {
+            //     col.items[i][eventName]('click', handleClick);
+            // }
         };
         col.destroyEvents = function() {
             col.initEvents(true);
@@ -355,7 +357,6 @@ Air.Module('AirUI.widget.Picker', function(require) {
     }
 
     function Picker(options) {
-        // TODO inputElm 上绑定focus, blur 等事件
         var picker = this;
         picker.cols = [];
         picker.opened = false;
@@ -373,7 +374,8 @@ Air.Module('AirUI.widget.Picker', function(require) {
             var pickerDom = document.createElement('div');
             pickerDom.className = 'picker-modal picker-columns remove-on-close';
             pickerDom.innerHTML = ' <header class="bar bar-nav">' +
-                '<button class="button button-link pull-right close-picker js-confirm">确定</button>' +
+                (options.cancel ? '<button class="button button-link pull-left close-picker js-cancel">' + options.cancel + '</button>' : '') +
+                (options.confirm ? '<button class="button button-link pull-right close-picker js-confirm">' + options.confirm + '</button>' : '') +
                 '<h1 class="title">' + options.title + '</h1>' +
                 '</header>' +
                 '<div class="picker-modal-inner picker-items">' +
@@ -399,7 +401,9 @@ Air.Module('AirUI.widget.Picker', function(require) {
             document.body.appendChild(pickerDom);
 
             picker.confirmBtn = pickerDom.querySelector('.js-confirm');
-            picker.confirmBtn.addEventListener('click', picker.select);
+            picker.cancelBtn = pickerDom.querySelector('.js-cancel');
+            picker.confirmBtn && picker.confirmBtn.addEventListener('click', picker.select);
+            picker.cancelBtn && picker.cancelBtn.addEventListener('click', picker.close);
 
             picker.container = pickerDom;
         }
@@ -476,7 +480,8 @@ Air.Module('AirUI.widget.Picker', function(require) {
             if (options.input) {
                 options.input.removeEventListener('click', openOnInput);
             }
-            picker.confirmBtn.removeEventListener('click', picker.select);
+            picker.confirmBtn && picker.confirmBtn.removeEventListener('click', picker.select);
+            picker.cancelBtn && picker.cancelBtn.removeEventListener('click', picker.close);
             document.removeEventListener('click', closeOnHTMLClick);
         };
 
