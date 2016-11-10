@@ -363,6 +363,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
 
         options = beacon.utility.merge({
             input: null,
+            containerClass: '',
             cols: [],
             title: '请选择',
             inputReadOnly: true
@@ -372,7 +373,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
         function generatePickerDom(cols) {
             picker.cols = [];
             var pickerDom = document.createElement('div');
-            pickerDom.className = 'picker-modal picker-columns remove-on-close';
+            pickerDom.className = 'picker-modal picker-columns remove-on-close ' + options.containerClass;
             pickerDom.innerHTML = ' <header class="bar bar-nav">' +
                 (options.cancel ? '<button class="button button-link pull-left close-picker js-cancel">' + options.cancel + '</button>' : '') +
                 (options.confirm ? '<button class="button button-link pull-right close-picker js-confirm">' + options.confirm + '</button>' : '') +
