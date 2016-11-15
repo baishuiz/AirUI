@@ -102,6 +102,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
         }, options);
 
         var col = this;
+        col.data = options.data;
         generateColDom(options.data);
 
         function generateColDom(data, isReplace) {
@@ -158,7 +159,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
         };
 
         // Set Value Function
-        col.setValue = function(newActiveIndex, transition, valueCallback) {
+        col.setValue = function(newActiveIndex, transition, valueCallback, forceTriggerCallBack) {
             col.calcSize();
             if (typeof transition === 'undefined') transition = '';
             if (typeof newActiveIndex === 'undefined' || newActiveIndex === -1) {
@@ -170,10 +171,10 @@ Air.Module('AirUI.widget.Picker', function(require) {
             domTransform(col.wrapper, 'translate3d(0,' + (newTranslate) + 'px,0)');
 
             // Update items
-            col.updateItems(newActiveIndex, newTranslate, transition, valueCallback);
+            col.updateItems(newActiveIndex, newTranslate, transition, valueCallback, forceTriggerCallBack);
         };
 
-        col.updateItems = function(activeIndex, translate, transition, valueCallback) {
+        col.updateItems = function(activeIndex, translate, transition, valueCallback, forceTriggerCallBack) {
             if (typeof translate === 'undefined') {
                 translate = getTranslate(col.wrapper, 'y');
             }
@@ -199,7 +200,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
 
             if (valueCallback) {
                 // On change callback
-                if (previousActiveIndex !== activeIndex) {
+                if ((previousActiveIndex !== activeIndex) || forceTriggerCallBack) {
                     if (valueCallback) {
                         valueCallback(col.value, col);
                     }
@@ -208,17 +209,24 @@ Air.Module('AirUI.widget.Picker', function(require) {
         };
 
         col.initVal = function() {
-            setTimeout(function() {
-                // Update items on init
-                if (options.updateItems) col.updateItems(0, maxTranslate, 0);
+            var activeIndex, translate;
+            if (col.data && col.value) {
+                var machedIndex = col.data.indexOf(col.value);
+                activeIndex = machedIndex !== -1 ? machedIndex : 0;
+                translate = machedIndex !== -1 ? currentTranslate : maxTranslate;
+            } else {
+                activeIndex = 0;
+                translate = maxTranslate;
+            }
+            // Update items on init
+            if (options.updateItems) col.updateItems(activeIndex, translate, 0);
 
-                if (!col.items || !col.items.length) {
-                    return
-                };
-                col.calcSize();
-                domTransform(col.wrapper, 'translate3d(0,' + maxTranslate + 'px,0)');
-                domTransition(col.wrapper, 0);
-            }, 18);
+            if (!col.items || !col.items.length) {
+                return
+            };
+            col.calcSize();
+            domTransform(col.wrapper, 'translate3d(0,' + translate + 'px,0)');
+            domTransition(col.wrapper, 0);
         }
         col.initVal();
 
@@ -227,8 +235,11 @@ Air.Module('AirUI.widget.Picker', function(require) {
 
         col.refresh = function(data) {
             options.data = data;
+            col.data = options.data;
             generateColDom(data, true);
-            col.initVal();
+            var machedIndex = col.data.indexOf(col.value);
+            var activeIndex = machedIndex !== -1 ? machedIndex : 0;
+            col.setValue(activeIndex, 0);
         }
 
         var allowItemClick = true;
@@ -288,6 +299,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
                 isTouched = isMoved = false;
                 return;
             }
+
             isTouched = isMoved = false;
             domTransition(col.wrapper, '');
             if (returnTo) {
@@ -317,7 +329,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
             domTransform(col.wrapper, 'translate3d(0,' + (parseInt(newTranslate, 10)) + 'px,0)');
 
             // Update items
-            col.updateItems(activeIndex, newTranslate, '');
+            col.updateItems(activeIndex, newTranslate, '', options.onChange);
 
             // Allow click
             setTimeout(function() {
@@ -370,6 +382,10 @@ Air.Module('AirUI.widget.Picker', function(require) {
         }, options);
         options = options || {};
 
+        function colOnChangeFn() {
+            picker.updateValue();
+        }
+
         function generatePickerDom(cols) {
             picker.cols = [];
             var pickerDom = document.createElement('div');
@@ -389,9 +405,7 @@ Air.Module('AirUI.widget.Picker', function(require) {
                 var colData = cols[i];
                 var col = new Col({
                     data: colData,
-                    onChange: function() {
-                        picker.updateValue();
-                    }
+                    onChange: colOnChangeFn
                 });
                 picker.cols.push(col);
                 pickerItemsFragment.appendChild(col.container);
@@ -446,10 +460,13 @@ Air.Module('AirUI.widget.Picker', function(require) {
                 // Set value
                 if (!picker.initialized) {
                     if (options.value) {
-                        picker.setValue(options.value, 0);
+                        picker.value = options.value;
+                        picker.setValue(options.value, 0, true);
                     }
                 } else {
-                    if (picker.value) picker.setValue(picker.value, 0);
+                    if (picker.value) {
+                        picker.setValue(picker.value, 0);
+                    }
                 }
 
                 setTimeout(function() {
@@ -486,17 +503,27 @@ Air.Module('AirUI.widget.Picker', function(require) {
             document.removeEventListener('click', closeOnHTMLClick);
         };
 
-        picker.setValue = function(arrValues, transition) {
+        picker.setValue = function(arrValues, transition, isInit) {
             var valueIndex = 0;
             for (var i = 0; i < options.cols.length; i++) {
-                var colData = options.cols[i];
                 var col = picker.cols[i];
+                var colData = isInit ? options.cols[i] : col.data;
                 if (colData && col) {
                     var value = arrValues[i];
                     var index = colData.indexOf(value);
-                    col.setValue(index, transition);
+                    col.setValue(index, transition, colOnChangeFn, true);
                 }
             }
+        }
+
+        picker.refresh = function(colIndex, data){
+            var col = picker.cols[colIndex];
+            if (!col) {
+                return;
+            }
+
+            col.value = picker.value[colIndex];
+            col.refresh(data);
         }
 
         // Input Events
