@@ -1,1 +1,1 @@
-b.Module("AirUI.UI.toast",function(o){function e(o){t.show(o),setTimeout(function(){t.close(o)},1e3)}var n=o("AirUI.UI.dialog"),t=n({needMask:!1});return{show:e}});
+b.Module("AirUI.UI.toast",function(require){function o(o){t.show(o),setTimeout(function(){t.close(o)},1e3)}var n=require("AirUI.UI.dialog"),t=n({needMask:!1});return{show:o}});

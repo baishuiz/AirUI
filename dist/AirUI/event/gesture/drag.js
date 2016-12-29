@@ -1,1 +1,1 @@
-Air.Module("AirUI.event.gesture.drag",function(e){function n(e){}var r=beacon.createEvent(n);return r});
+Air.Module("AirUI.event.gesture.drag",function(require){function n(e){}var t=beacon.createEvent(n);return t});
