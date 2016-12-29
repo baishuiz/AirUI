@@ -1,10 +1,1 @@
-Air.Module('AirUI.event.gesture.drag', function(require){
-  function eventAction(e){
-      // beacon(document).on('touchStart', function(){
-      //
-      // })
-  };
-  var dragEvent = beacon.createEvent(eventAction);
-
-  return dragEvent;
-});
+Air.Module("AirUI.event.gesture.drag",function(e){function n(e){}var r=beacon.createEvent(n);return r});

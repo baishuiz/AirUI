@@ -1,6 +1,6 @@
 // var gulp = require('gulp');
 
-var handleError = function (err) {
+var handleError = function(err) {
     var colors = gutil.colors;
     console.log('\n')
     gutil.log(colors.red('Error!'))
@@ -25,22 +25,25 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
-    livereload = require('gulp-livereload');
+    livereload = require('gulp-livereload'),
+    del = require('del');
 
 
-    var DEST = 'dist/AirUI';
-    var SRC  = 'src/module/**/*.js'
+var DEST = 'dist/AirUI';
+var SRC = 'src/module/**/*.js'
 
 gulp.task('default', function() {
+
+    del.sync(['dist/']);
     gulp.src(SRC)
-    // .pipe(jshint('.jshintrc'))
-    // .pipe(jshint.reporter('default'))
-    .pipe(changed(DEST, {hasChanged: changed.compareSha1Digest}))
-    .pipe(gulp.dest(DEST))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify().on('error', gutil.log))
-    .pipe(gulp.dest(DEST))
-    .pipe(notify({ message: 'Scripts task complete' }));
+        // .pipe(jshint('.jshintrc'))
+        // .pipe(jshint.reporter('default'))
+        // .pipe(changed(DEST, { hasChanged: changed.compareSha1Digest }))
+        // .pipe(gulp.dest(DEST))
+        // .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify().on('error', gutil.log))
+        .pipe(gulp.dest(DEST))
+        .pipe(notify({ message: 'Scripts task complete' }));
 
 
 
